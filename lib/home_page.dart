@@ -1,10 +1,17 @@
 import 'dart:math';
-import 'package:fltr_test_app/history.dart';
+import 'package:fltr_test_app/color_history_list.dart';
+import 'package:fltr_test_app/globals.dart';
 import 'package:flutter/material.dart';
 
+///This class is our main screen, where we see main changes
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+  ///Simple constructor with one required argument
+  const HomePage({
+    required this.title,
+    super.key,
+  });
 
+  ///Variable that determines title in AppBar of application
   final String title;
 
   @override
@@ -15,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   Color _backgroundColor = Colors.white;
   Color _textColor = Colors.black;
 
-  List<Color> _registeredColors = List.empty(growable: true);
+  final List<Color> _registeredColors = List.empty(growable: true);
 
   void _changeBackgroundColor() {
     _registeredColors.add(_backgroundColor);
@@ -54,6 +61,9 @@ class _HomePageState extends State<HomePage> {
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height / bottomOverlayDividedBy,
+      ),
       builder: (ctx) => ColorHistoryList(
         colorHistory: _registeredColors,
         onRemoveColor: _removeColorFromHistory,
@@ -75,11 +85,9 @@ class _HomePageState extends State<HomePage> {
         content: const Text('The color has been removed'),
         action: SnackBarAction(
           label: 'Undo',
-          onPressed: () {
-            setState(() {
-              _registeredColors.insert(colorIndex, backgroundColor);
-            });
-          },
+          onPressed: () => setState(() {
+            _registeredColors.insert(colorIndex, backgroundColor);
+          }),
         ),
       ),
     );
@@ -87,8 +95,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const fontSize24 = 24.0;
-
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: AppBar(
