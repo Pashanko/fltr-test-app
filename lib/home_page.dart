@@ -96,7 +96,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _backgroundColor,
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -104,12 +103,21 @@ class _HomePageState extends State<HomePage> {
         onTap: _changeBackgroundColor,
         behavior: HitTestBehavior.translucent,
         child: Center(
-          child: Text(
-            'Hello there',
-            style: TextStyle(
-              fontSize: fontSize24,
-              fontWeight: FontWeight.bold,
-              color: _textColor,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: transitionDuration),
+            width: double.infinity,
+            height: double.infinity,
+            curve: Curves.easeInOut,
+            color: _backgroundColor,
+            child: Center(
+              child: Text(
+                'Hello there',
+                style: TextStyle(
+                  fontSize: fontSize24,
+                  fontWeight: FontWeight.bold,
+                  color: _textColor, // Animated property
+                ),
+              ),
             ),
           ),
         ),

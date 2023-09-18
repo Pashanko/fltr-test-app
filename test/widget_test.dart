@@ -4,7 +4,6 @@
 // utility in the flutter_test package. For example, you can send tap and scroll
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:fltr_test_app/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -26,8 +25,10 @@ void main() {
 
     // Verify that the initial background color is white.
     expect(
-      tester.widget<Scaffold>(find.byType(Scaffold)).backgroundColor,
-      Colors.white,
+      tester
+          .widget<AnimatedContainer>(find.byType(AnimatedContainer))
+          .decoration,
+      const BoxDecoration(color: Colors.white),
     );
 
     // Verify that the initial text color is black
@@ -51,8 +52,9 @@ void main() {
     );
 
     // Record the initial background color.
-    final initialBackgroundColor =
-        tester.widget<Scaffold>(find.byType(Scaffold)).backgroundColor;
+    final initialBackgroundColor = tester
+        .widget<AnimatedContainer>(find.byType(AnimatedContainer))
+        .decoration;
 
     // Tap on the screen to change the background color.
     await tester.tap(find.byType(GestureDetector).at(0));
@@ -60,7 +62,9 @@ void main() {
 
     // Verify that the background color has changed.
     expect(
-      tester.widget<Scaffold>(find.byType(Scaffold)).backgroundColor,
+      tester
+          .widget<AnimatedContainer>(find.byType(AnimatedContainer))
+          .decoration,
       isNot(equals(initialBackgroundColor)),
     );
   });

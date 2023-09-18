@@ -15,3 +15,6 @@ const double colorHistoryListTopMargin = 20;
 
 ///Used in Main class to determine font size of greeting message
 const double fontSize24 = 24;
+
+///Used in HomePage class to determine duration of color transition
+const int transitionDuration = 750;
